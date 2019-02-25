@@ -108,7 +108,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Lower
  * ,-----------------------------------------------------------------------------------.
- * | Bksp |  F1  |  F1  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 | Del  |
+ * | Tab  |  F1  |  F1  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 | Del  |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * | Del  | Home |  Up  |  End | PGUP |  Ins | Pause|   -  |   =  |   [  |   ]  | Del  |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
@@ -121,8 +121,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * IDEA: B as leader key
  */
 [_LOWER] = LAYOUT_preonic_grid( \
-  KC_BSPC, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,  \
-  KC_DEL,  KC_HOME, KC_UP,   KC_END,  KC_PGUP, KC_INS,  KC_PAUS, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_DEL,  \
+  KC_TAB,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,  \
+  KC_CAPS,  KC_HOME, KC_UP,   KC_END,  KC_PGUP, KC_INS,  KC_PAUS, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_DEL, \
   KC_DEL,  KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, KC_LOCK, _______, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_PIPE, \
   _______, KC_MPRV, KC_MPLY, KC_MNXT, _______, KC_WBAK, KC_WFWD,S(KC_NUHS),S(KC_NUBS),KC_HOME,KC_END,_______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  \
@@ -136,7 +136,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * | Del  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   -  |   =  |   [  |   ]  |  \   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |ISO # |ISO / |  Up  | Menu | Shift|
+ * |      |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |ISO # |ISO / |  Up  | Menu |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |             |      | Left | Down | Right| Ctrl |
  * `-----------------------------------------------------------------------------------'
@@ -145,9 +145,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_RAISE] = LAYOUT_preonic_grid( \
   KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_DEL,  \
-  KC_CAPS, _______, _______, _______, _______, _______, _______, KC_UNDS, KC_PLUS, KC_F11,  KC_F12,   KC_DEL,  \
+  KC_MUTE, _______, _______, _______, _______, _______, _______, KC_UNDS, KC_PLUS, KC_F11,  KC_F12,   KC_DEL,  \
   KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC,  KC_BSLS, \
-  _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_NUHS, KC_NUBS, KC_UP,   KC_APP,   KC_RSFT, \
+  _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_NUHS, KC_NUBS, KC_UP,   KC_APP,   _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RIGHT, KC_RCTL  \
 ),
 
@@ -258,13 +258,46 @@ void encoder_update_user(uint8_t index, bool clockwise) {
       }
     }
   } else {
-    if (clockwise) {
-      register_code(KC_PGDN);
-      unregister_code(KC_PGDN);
+    if (IS_LAYER_ON(_LOWER)) {
+      if (clockwise) {
+        register_code(KC_WH_D);
+        unregister_code(KC_WH_D);
+      } else {
+        register_code(KC_WH_U);
+        unregister_code(KC_WH_U);
+      }
+
+    } else if (IS_LAYER_ON(_RAISE)) {
+      if (clockwise) {
+        register_code(KC_VOLU);
+        unregister_code(KC_VOLU);
+      } else {
+        register_code(KC_VOLD);
+        unregister_code(KC_VOLD);
+      }
+
+    } else if (IS_LAYER_ON(_ADJUST)) {
+      if (clockwise) {
+        register_code(KC_DEL);
+        unregister_code(KC_DEL);
+      } else {
+        register_code(KC_BSPC);
+        unregister_code(KC_BSPC);
+      }
+
     } else {
-      register_code(KC_PGUP);
-      unregister_code(KC_PGUP);
+      if (clockwise) {
+        register_code(KC_TAB);
+        unregister_code(KC_TAB);
+      } else {
+        register_code(KC_LSFT);
+        register_code(KC_TAB);
+        unregister_code(KC_TAB);
+        unregister_code(KC_LSFT);
+      }
+
     }
+    
   }
 }
 
