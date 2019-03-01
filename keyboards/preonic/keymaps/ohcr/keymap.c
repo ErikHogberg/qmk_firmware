@@ -132,11 +132,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |   `  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 | Del  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Caps |      |      |      |      |      |      |   _  |   +  |  F11 |  F12 | Del  |
+ * | Mute |RClick|MouseU|LClick|      |      |      |   _  |   +  |  F11 |  F12 | Del  |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Del  |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |   -  |   =  |   [  |   ]  |  \   |
+ * | Del  |MouseL|MouseD|MouseR|      |      |      |   -  |   =  |   [  |   ]  |  \   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |ISO # |ISO / |  Up  | Menu |      |
+ * |      |      |      |      |      |      |      |ISO # |ISO / |  Up  | Menu |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |             |      | Left | Down | Right| Ctrl |
  * `-----------------------------------------------------------------------------------'
@@ -145,9 +145,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_RAISE] = LAYOUT_preonic_grid( \
   KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_DEL,  \
-  KC_MUTE, _______, _______, _______, _______, _______, _______, KC_UNDS, KC_PLUS, KC_F11,  KC_F12,   KC_DEL,  \
-  KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC,  KC_BSLS, \
-  _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_NUHS, KC_NUBS, KC_UP,   KC_APP,   _______, \
+  KC_MUTE, KC_BTN2, KC_MS_U, KC_BTN1, _______, _______, _______, KC_UNDS, KC_PLUS, KC_F11,  KC_F12,   KC_DEL,  \
+  KC_DEL,  KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, _______, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC,  KC_BSLS, \
+  _______, _______, _______, _______, _______, _______, _______, KC_NUHS, KC_NUBS, KC_UP,   KC_APP,   _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RIGHT, KC_RCTL  \
 ),
 
@@ -161,7 +161,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Brite|Voice-|Voice+|Mus on|MusOff|MidiOn|MidOff|MusTog|      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      |      |      |      |      |
+ * |      |      |      |      |      |             |      |      |Vol Dn|Vol Up|      |
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] = LAYOUT_preonic_grid( \
@@ -169,7 +169,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   _______, RESET,   DEBUG,   _______, _______, _______, _______, TERM_ON, TERM_OFF,_______, KC_PSCR, KC_DEL,  \
   _______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  COLEMAK, DVORAK,  KC_MYCM, KC_CALC, \
   BACKLIT, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  MU_TOG,  _______, _______, _______, _______, \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  \
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_VOLD, KC_VOLU, _______  \
 )
 
 
@@ -269,7 +269,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
 
     } else if (IS_LAYER_ON(_RAISE)) {
       if (clockwise) {
-        register_code(KC_VOLU);
+        register_code(KC_VOLU); // FIXME: not working here, but works in keymap
         unregister_code(KC_VOLU);
       } else {
         register_code(KC_VOLD);
