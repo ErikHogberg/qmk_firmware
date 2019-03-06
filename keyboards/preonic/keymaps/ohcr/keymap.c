@@ -242,6 +242,8 @@ uint16_t muse_counter = 0;
 uint8_t muse_offset = 70;
 uint16_t muse_tempo = 50;
 
+bool clockwise_tab = false;
+
 void encoder_update_user(uint8_t index, bool clockwise) {
   if (muse_mode) {
     if (IS_LAYER_ON(_RAISE)) {
@@ -286,7 +288,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
       }
 
     } else {
-      if (clockwise) {
+      if ((clockwise && clockwise_tab)||(!clockwise && !clockwise_tab)) {
         register_code(KC_TAB);
         unregister_code(KC_TAB);
       } else {
@@ -319,6 +321,16 @@ void dip_update(uint8_t index, bool active) {
           stop_all_notes();
         #endif
       }
+      break;
+    case 2:
+      break;  
+    case 3:
+      if (active) {
+        clockwise_tab = true;
+      } else {
+        clockwise_tab = false;        
+      }
+      break;
    }
 }
 
