@@ -112,9 +112,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * | Tab  |  F1  |  F1  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 | Del  |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Del  | Home |  Up  |  End | PGUP |  Ins | Pause|   -  |   =  |   {  |   }  | Del  |
+ * | Del  | Home |  Up  |  End | PGUP |  Ins | Pause|   _  |   +  |   {  |   }  | Del  |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Del  | Left | Down | Right| PGDN |Key LC|      |   _  |   +  |   [  |   ]  |  |   |
+ * | Del  | Left | Down | Right| PGDN |Key LC|      |   -  |   =  |   [  |   ]  |  |   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |      | Prev | Play | Next |      | Back |  Fwd |ISO ~ |ISO | | Home | End  |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -124,8 +124,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_LOWER] = LAYOUT_preonic_grid( \
   KC_TAB,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,  \
-  KC_CAPS, KC_HOME, KC_UP,   KC_END,  KC_PGUP, KC_INS,  KC_PAUS, KC_MINS, KC_EQL,  KC_LCBR, KC_RCBR, KC_DEL,  \
-  KC_DEL,  KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, KC_LOCK, _______, KC_UNDS, KC_PLUS, KC_LBRC, KC_RBRC, KC_PIPE, \
+  KC_CAPS, KC_HOME, KC_UP,   KC_END,  KC_PGUP, KC_INS,  KC_PAUS, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_DEL,  \
+  KC_DEL,  KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, KC_LOCK, _______, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_PIPE, \
   _______, KC_MPRV, KC_MPLY, KC_MNXT, _______, KC_WBAK, KC_WFWD,S(KC_NUHS),S(KC_NUBS),KC_HOME,KC_END,_______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  \
 ),
