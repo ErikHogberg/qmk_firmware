@@ -30,8 +30,8 @@ enum preonic_keycodes {
   QWERTY = SAFE_RANGE,
   COLEMAK,
   DVORAK,
-  LOWER,
-  RAISE,
+  LOWER = LT(_LOWER, KC_TAB, // IDEA: leader key
+  RAISE = LT(_RAISE, KC_BSPC),
   BACKLIT
 };
 
@@ -205,7 +205,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             layer_off(_LOWER);
             update_tri_layer(_LOWER, _RAISE, _ADJUST);
           }
-          return false;
+          //return false;
           break;
         case RAISE:
           if (record->event.pressed) {
@@ -215,7 +215,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             layer_off(_RAISE);
             update_tri_layer(_LOWER, _RAISE, _ADJUST);
           }
-          return false;
+          //return false;
           break;
         case BACKLIT:
           if (record->event.pressed) {
