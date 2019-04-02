@@ -30,7 +30,7 @@ enum preonic_keycodes {
   QWERTY = SAFE_RANGE,
   COLEMAK,
   DVORAK,
-  LOWER = LT(_LOWER, KC_TAB, // IDEA: leader key
+  LOWER = LT(_LOWER, KC_TAB), // IDEA: leader key
   RAISE = LT(_RAISE, KC_BSPC),
   BACKLIT
 };
