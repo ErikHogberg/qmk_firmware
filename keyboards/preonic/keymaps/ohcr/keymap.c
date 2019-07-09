@@ -19,8 +19,7 @@
 
 enum preonic_layers {
   _QWERTY,
-  _COLEMAK,
-  _DVORAK,
+  _RUNIC,
   _LOWER,
   _RAISE,
   _ADJUST
@@ -28,14 +27,44 @@ enum preonic_layers {
 
 enum preonic_keycodes {
   QWERTY = SAFE_RANGE,
-  COLEMAK,
-  DVORAK,
-  LOWER = LT(_LOWER, KC_TAB), // IDEA: leader key
-  RAISE = LT(_RAISE, KC_BSPC),
+  RUNIC,
+  LOWER = LT(_LOWER, KC_TAB),
+  RAISE = LT(_RAISE, MOD_RALT), // IDEA: leader key
   BACKLIT
 };
 
+#define FEHU 0x16A0 // f, Frey/wealth
+#define URUZ 0x16A2 // u, ox
+#define THURISAZ 0x16A6 // th, Thor
+#define ANSUZ 0x16A8 // a, Odin
+#define RAIDO 0x16B1 // r, riding
+#define KAUNAN 0x16B2 // k/c, torch
+#define GEBO 0x16B7 // g, gift
+#define WUNJO 0x16B9 // w, joy
+#define HAGALAZ 0x16BA // h, hail rain
+#define NAUDIZ 0x16BE // n, need
+#define ISAZ 0x16C1 // i, ice
+#define JERA 0x16C3 // j, year
+#define EIWAZ 0x16C7 // y, yew-tree
+#define PERTH 0x16C8 // p, pear-tree
+#define ALGIZ 0x16C9 // z, protection
+#define SOWILO 0x16CA // s, sun
+#define TIWAZ 0x16CF // t, Tyr/sacrifice
+#define BERKANAN 0x16D2 // b, birch-tree
+#define EHWAZ 0x16D6 // e, horse
+#define MANNAZ 0x16D7 // m, man
+#define LAGUZ 0x16DA // l, lake
+#define INGWAZ 0x16DC // ng, Yngvi
+#define DAGAZ 0x16DE // d, day
+#define OTHALA 0x16DF // o, heritage/estate
+
+#define THINSPACE 0x2009
+
+
 // float my_song[][2] = SONG(MARIO_THEME);
+
+// TODO: underglow, with layer indication
+// TODO: unicode runes
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -51,12 +80,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |-------+------+------+------+------+------+------+------+------+------+------+-------|
  * |  Ctrl |   \  |  GUI | Alt  |Lower |    Space    |Raise | Left*| Down |  Up  |Right**|
  * `-------------------------------------------------------------------------------------'
- * *MT(AltGr, Left) 
- * **MT(Ctrl, Right) 
- * ***MT(Shift, ") 
+ * *MT(AltGr, Left)
+ * **MT(Ctrl, Right)
+ * ***MT(Shift, ")
  * ****Rotary encoder (left for shift tab, right for tab, press for tab)
- * TODO: rotary encoder on tab, clockwise for tab, counter-clockwise for shift-tab, click for tab
- * 
+ *
  */
 [_QWERTY] = LAYOUT_preonic_grid( \
   KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,  KC_5,   KC_6,   KC_7,  KC_8,                  KC_9,    KC_0,    KC_BSPC,               \
@@ -66,46 +94,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_LCTL, KC_NUBS, KC_LGUI, KC_LALT, LOWER, KC_SPC, KC_SPC, RAISE, MT(MOD_RALT, KC_LEFT), KC_DOWN, KC_UP,   MT(MOD_RCTL, KC_RGHT)  \
 ),
 
-/* Colemak
- * ,-----------------------------------------------------------------------------------.
- * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Tab  |   Q  |   W  |   F  |   P  |   G  |   J  |   L  |   U  |   Y  |   ;  | Del  |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Esc  |   A  |   R  |   S  |   T  |   D  |   H  |   N  |   E  |   I  |   O  |  "   |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
- * | Shift|   Z  |   X  |   C  |   V  |   B  |   K  |   M  |   ,  |   .  |   /  |Enter |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Brite| Ctrl | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
- * `-----------------------------------------------------------------------------------'
+/* Runic
+ * ,-------------------------------------------------------------------------------------.
+ * |    `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  |  Bksp |
+ * |-------+------+------+------+------+------+------+------+------+------+------+-------|
+ * |Tab****|   ᛜ  |   ᚹ  |   ᛖ  |   ᚱ  |   ᛏ  |   ᛇ  |   ᚢ  |   ᛁ  |   ᛟ  |   ᛈ  |   \   |
+ * |-------+------+------+------+------+-------------+------+------+------+------+-------|
+ * |  Esc  |   ᚨ  |   ᛊ  |   ᛞ  |   ᚠ  |   ᚷ  |   ᚺ  |   ᛃ  |   ᚲ  |   ᛚ  |   ;  | Enter |
+ * |-------+------+------+------+------+------|------+------+------+------+------+-------|
+ * | Shift |   ᛉ  |   ᚦ  |   ᚲ  |   ᚹ  |   ᛒ  |   ᚾ  |   ᛗ  |   ,  |   .  |   /  |  "*** |
+ * |-------+------+------+------+------+------+------+------+------+------+------+-------|
+ * |  Ctrl |   \  |  GUI | Alt  |Lower |    Space    |Raise | Left*| Down |  Up  |Right**|
+ * `-------------------------------------------------------------------------------------'
+ * *MT(AltGr, Left)
+ * **MT(Ctrl, Right)
+ * ***MT(Shift, ")
+ * ****Rotary encoder (left for shift tab, right for tab, press for tab)
+ *
  */
-[_COLEMAK] = LAYOUT_preonic_grid( \
-  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC, \
-  KC_TAB,  KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_DEL,  \
-  KC_ESC,  KC_A,    KC_R,    KC_S,    KC_T,    KC_D,    KC_H,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT, \
-  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,  \
-  BACKLIT, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT  \
-),
-
-/* Dvorak
- * ,-----------------------------------------------------------------------------------.
- * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Bksp |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Tab  |   "  |   ,  |   .  |   P  |   Y  |   F  |   G  |   C  |   R  |   L  | Del  |
- * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Esc  |   A  |   O  |   E  |   U  |   I  |   D  |   H  |   T  |   N  |   S  |  /   |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
- * | Shift|   ;  |   Q  |   J  |   K  |   X  |   B  |   M  |   W  |   V  |   Z  |Enter |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Brite| Ctrl | Alt  | GUI  |Lower |    Space    |Raise | Left | Down |  Up  |Right |
- * `-----------------------------------------------------------------------------------'
- */
-[_DVORAK] = LAYOUT_preonic_grid( \
-  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC, \
-  KC_TAB,  KC_QUOT, KC_COMM, KC_DOT,  KC_P,    KC_Y,    KC_F,    KC_G,    KC_C,    KC_R,    KC_L,    KC_DEL,  \
-  KC_ESC,  KC_A,    KC_O,    KC_E,    KC_U,    KC_I,    KC_D,    KC_H,    KC_T,    KC_N,    KC_S,    KC_SLSH, \
-  KC_LSFT, KC_SCLN, KC_Q,    KC_J,    KC_K,    KC_X,    KC_B,    KC_M,    KC_W,    KC_V,    KC_Z,    KC_ENT,  \
-  BACKLIT, KC_LCTL, KC_LALT, KC_LGUI, LOWER,   KC_SPC,  KC_SPC,  RAISE,   KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT  \
+[_RUNIC] = LAYOUT_preonic_grid( \
+  KC_GRV,  KC_1,       KC_2,         KC_3,       KC_4,      KC_5,         KC_6,          KC_7,       KC_8,                  KC_9,       KC_0,      KC_BSPC,               \
+  KC_TAB,  UC(INGWAZ), UC(WUNJO),    UC(EHWAZ),  UC(RAIDO), UC(TIWAZ),    UC(EIWAZ),     UC(URUZ),   UC(ISAZ),              UC(OTHALA), UC(PERTH), KC_BSLS,               \
+  KC_ESC,  UC(ANSUZ),  UC(SOWILO),   UC(DAGAZ),  UC(FEHU),  UC(GEBO),     UC(HAGALAZ),   UC(JERA),   UC(KAUNAN),            UC(LAGUZ),  KC_SCLN,   KC_ENT,                \
+  KC_LSFT, UC(ALGIZ),  UC(THURISAZ), UC(KAUNAN), UC(WUNJO), UC(BERKANAN), UC(NAUDIZ),    UC(MANNAZ), KC_COMM,               KC_DOT,     KC_SLSH,   MT(MOD_RSFT, KC_QUOT), \
+  KC_LCTL, KC_NUBS,    KC_LGUI,      KC_LALT,    LOWER,     UC(THINSPACE),UC(THINSPACE), RAISE,      MT(MOD_RALT, KC_LEFT), KC_DOWN,    KC_UP,     MT(MOD_RCTL, KC_RGHT)  \
 ),
 
 /* Lower
@@ -120,7 +132,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |             |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
- * IDEA: B as leader key
+ * IDEA: V as leader key
+ * IDEA: WoW rotation tap-dance
  */
 [_LOWER] = LAYOUT_preonic_grid( \
   KC_TAB,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,  \
@@ -142,7 +155,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |             |      | Left | Down | Right| Ctrl |
  * `-----------------------------------------------------------------------------------'
- * 
+ *
  * TODO: Rotary encoder volume control, click to mute?
  */
 [_RAISE] = LAYOUT_preonic_grid( \
@@ -157,7 +170,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      | Reset|      |      |      |      |      |      |      |      | Print|  Del |
+ * |      | Reset|      |      |      |      | Runic| Term | Term |      | Print|  Del |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |      |      |      |Aud on|AudOff|AGnorm|AGswap|Qwerty|Colemk|Dvorak| My PC| Calc |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
@@ -169,13 +182,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_ADJUST] = LAYOUT_preonic_grid( \
   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  \
   _______, RESET,   DEBUG,   _______, _______, _______, _______, TERM_ON, TERM_OFF,_______, KC_PSCR, KC_DEL,  \
-  _______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  COLEMAK, DVORAK,  KC_MYCM, KC_CALC, \
+  _______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, _______, QWERTY,  RUNIC,   KC_MYCM, KC_CALC, \
   BACKLIT, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  MU_TOG,  _______, _______, _______, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_VOLD, KC_VOLU, _______  \
 )
 
-
 };
+
+void eeconfig_init_user(void) {
+  set_unicode_input_mode(UC_WINC);
+}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
@@ -185,15 +201,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
           }
           return false;
           break;
-        case COLEMAK:
+        case RUNIC:
           if (record->event.pressed) {
-            set_single_persistent_default_layer(_COLEMAK);
-          }
-          return false;
-          break;
-        case DVORAK:
-          if (record->event.pressed) {
-            set_single_persistent_default_layer(_DVORAK);
+            set_single_persistent_default_layer(_RUNIC);
           }
           return false;
           break;
@@ -301,7 +311,7 @@ void encoder_update_user(uint8_t index, bool clockwise) {
       }
 
     }
-    
+
   }
 }
 
@@ -325,12 +335,12 @@ void dip_update(uint8_t index, bool active) {
       }
       break;
     case 2:
-      break;  
+      break;
     case 3:
       if (active) {
         clockwise_tab = true;
       } else {
-        clockwise_tab = false;        
+        clockwise_tab = false;
       }
       break;
    }
