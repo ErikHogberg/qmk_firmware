@@ -29,34 +29,34 @@ enum preonic_keycodes {
   QWERTY = SAFE_RANGE,
   RUNIC,
   LOWER = LT(_LOWER, KC_TAB),
-  RAISE = LT(_RAISE, MOD_RALT), // IDEA: leader key
+  RAISE = LT(_RAISE, KC_DEL), // IDEA: leader key
   BACKLIT
 };
 
-#define FEHU 0x16A0 // f, Frey/wealth
-#define URUZ 0x16A2 // u, ox
-#define THURISAZ 0x16A6 // th, Thor
-#define ANSUZ 0x16A8 // a, Odin
-#define RAIDO 0x16B1 // r, riding
-#define KAUNAN 0x16B2 // k/c, torch
-#define GEBO 0x16B7 // g, gift
-#define WUNJO 0x16B9 // w, joy
-#define HAGALAZ 0x16BA // h, hail rain
-#define NAUDIZ 0x16BE // n, need
-#define ISAZ 0x16C1 // i, ice
-#define JERA 0x16C3 // j, year
-#define EIWAZ 0x16C7 // y, yew-tree
-#define PERTH 0x16C8 // p, pear-tree
-#define ALGIZ 0x16C9 // z, protection
-#define SOWILO 0x16CA // s, sun
-#define TIWAZ 0x16CF // t, Tyr/sacrifice
-#define BERKANAN 0x16D2 // b, birch-tree
-#define EHWAZ 0x16D6 // e, horse
-#define MANNAZ 0x16D7 // m, man
-#define LAGUZ 0x16DA // l, lake
-#define INGWAZ 0x16DC // ng, Yngvi
-#define DAGAZ 0x16DE // d, day
-#define OTHALA 0x16DF // o, heritage/estate
+#define FEHU 0x16A0 // ᚠ, f, Frey/wealth
+#define URUZ 0x16A2 // ᚢ, u, ox
+#define THURISAZ 0x16A6 // ᚦ,th, Thor
+#define ANSUZ 0x16A8 // ᚨ, a, Odin
+#define RAIDO 0x16B1 // ᚱ, r, riding
+#define KAUNAN 0x16B2 // ᚲ, k/c, torch
+#define GEBO 0x16B7 // ᚷ, g, gift
+#define WUNJO 0x16B9 // ᚹ, w, joy
+#define HAGALAZ 0x16BA // ᚺ, h, hail rain
+#define NAUDIZ 0x16BE // ᚾ, n, need
+#define ISAZ 0x16C1 // ᛁ, i, ice
+#define JERA 0x16C3 // ᛃ, j, year
+#define EIWAZ 0x16C7 // ᛇ, y, yew-tree
+#define PERTH 0x16C8 // ᛈ, p, pear-tree
+#define ALGIZ 0x16C9 // ᛉ, z, protection
+#define SOWILO 0x16CA // ᛊ, s, sun
+#define TIWAZ 0x16CF // ᛏ, t, Tyr/sacrifice
+#define BERKANAN 0x16D2 // ᛒ, b, birch-tree
+#define EHWAZ 0x16D6 // ᛖ, e, horse
+#define MANNAZ 0x16D7 // ᛗ, m, man
+#define LAGUZ 0x16DA // ᛚ, l, lake
+#define INGWAZ 0x16DC // ᛜ, ng, Yngvi
+#define DAGAZ 0x16DE // ᛞ, d, day
+#define OTHALA 0x16DF // ᛟ, ᛊo, heritage/estate
 
 #define THINSPACE 0x2009
 
@@ -124,23 +124,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * | Tab  |  F1  |  F1  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 | Del  |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Del  | Home |  Up  |  End | PGUP |  Ins | Pause|   _  |   +  |   {  |   }  | Del  |
+ * | Del  | Home |  Up  |  End | PGUP |  Ins | Pause|   _  |   +  |   [  |   ]  | Del  |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * | Del  | Left | Down | Right| PGDN |Key LC|      |   -  |   =  |   [  |   ]  |  |   |
- * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      | Prev | Play | Next |      | Back |  Fwd |ISO ~ |ISO | | Home | End  |      |
+ * | Del  | Left | Down | Right| PGDN |      |      |   -  |   =  |   {  |   }  |  |   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      |      |      |      |      |
+ * |      | Prev | Play | Next |      | Back |  Fwd |ISO ~ |ISO | |   -  |   +  |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      | Menu |      |      |      |             |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  * IDEA: V as leader key
  * IDEA: WoW rotation tap-dance
  */
 [_LOWER] = LAYOUT_preonic_grid( \
   KC_TAB,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,  \
-  KC_CAPS, KC_HOME, KC_UP,   KC_END,  KC_PGUP, KC_INS,  KC_PAUS, KC_UNDS, KC_PLUS, KC_LCBR, KC_RCBR, KC_DEL,  \
-  KC_DEL,  KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, KC_LOCK, _______, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_PIPE, \
-  _______, KC_MPRV, KC_MPLY, KC_MNXT, _______, KC_WBAK, KC_WFWD,S(KC_NUHS),S(KC_NUBS),KC_HOME,KC_END,_______, \
-  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  \
+  KC_CAPS, KC_HOME, KC_UP,   KC_END,  KC_PGUP, KC_INS,  KC_PAUS, KC_UNDS, KC_PLUS, KC_LBRC, KC_RBRC, KC_NUHS,  \
+  KC_DEL,  KC_LEFT, KC_DOWN, KC_RGHT, KC_PGDN, _______, _______, KC_MINS, KC_EQL,  KC_LCBR, KC_RCBR, KC_PIPE, \
+  _______, KC_MPRV, KC_MPLY, KC_MNXT, _______, KC_WBAK, KC_WFWD,S(KC_NUHS),S(KC_NUBS),KC_MINS,KC_PLUS,_______, \
+  _______, KC_APP,  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  \
 ),
 
 /* Raise
@@ -160,7 +160,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_RAISE] = LAYOUT_preonic_grid( \
   KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_DEL,  \
-  KC_MUTE, KC_BTN2, KC_MS_U, KC_BTN1, _______, _______, _______, KC_UNDS, KC_PLUS, KC_F11,  KC_F12,   KC_DEL,  \
+  KC_MUTE, KC_BTN2, KC_MS_U, KC_BTN1, _______, _______, _______, KC_UNDS, KC_PLUS, KC_F11,  KC_F12,   KC_NUHS,  \
   KC_DEL,  KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, _______, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC,  KC_BSLS, \
   _______, _______, _______, _______, _______, _______, _______, KC_NUHS, KC_NUBS, KC_UP,   KC_APP,   _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RIGHT, KC_RCTL  \
