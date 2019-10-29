@@ -60,6 +60,8 @@ enum preonic_keycodes {
 
 #define THINSPACE 0x2009
 
+// wait DELAY ms before unregistering media keys
+#define MEDIA_KEY_DELAY 10
 
 // float my_song[][2] = SONG(MARIO_THEME);
 
@@ -280,13 +282,21 @@ void encoder_update_user(uint8_t index, bool clockwise) {
         register_code(KC_WH_U);
         unregister_code(KC_WH_U);
       }
-
+  
     } else if (IS_LAYER_ON(_RAISE)) {
+      uint16_t held_keycode_timer = timer_read();
       if (clockwise) {
-        register_code(KC_VOLU); // FIXME: not working here, but works in keymap
+        register_code(KC_VOLU); 
+          // thanks to u/mindsound for volume knob fix fix: https://www.reddit.com/r/olkb/comments/9jzbg1/help_with_rotary_encoder_code/?utm_source=amp&utm_medium=comment_list
+          while (timer_elapsed(held_keycode_timer) < MEDIA_KEY_DELAY) {
+            // no-op
+          }
         unregister_code(KC_VOLU);
       } else {
         register_code(KC_VOLD);
+        while (timer_elapsed(held_keycode_timer) < MEDIA_KEY_DELAY) {
+          // no-op
+        }
         unregister_code(KC_VOLD);
       }
 
