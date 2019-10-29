@@ -1,4 +1,5 @@
 SRC += muse.c
+# SRC += analog.c
 #KEY_LOCK_ENABLE = yes
 EXTRAKEY_ENABLE = yes
 # RGBLIGHT_ENABLE = yes
