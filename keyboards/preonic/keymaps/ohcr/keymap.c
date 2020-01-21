@@ -153,9 +153,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * | Del  |MouseL|MouseD|MouseR|      |      |      |   -  |   =  |   [  |   ]  |  \   |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |ISO # |ISO / |  Up  | Menu |      |
+ * |      |      |      |      |      |      |      |ISO # |ISO / | Menu | Menu |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      | Left | Down | Right| Ctrl |
+ * |      |      |      |      |      |             |      | Home | PgDn | PgUp | End |
  * `-----------------------------------------------------------------------------------'
  *
  * TODO: Rotary encoder volume control, click to mute?
@@ -164,8 +164,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_DEL,  \
   KC_MUTE, KC_BTN2, KC_MS_U, KC_BTN1, _______, _______, _______, KC_UNDS, KC_PLUS, KC_F11,  KC_F12,   KC_NUHS,  \
   KC_DEL,  KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, _______, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC,  KC_BSLS, \
-  _______, _______, _______, _______, _______, _______, _______, KC_NUHS, KC_NUBS, KC_UP,   KC_APP,   _______, \
-  _______, _______, _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RIGHT, KC_RCTL  \
+  _______, _______, _______, _______, _______, _______, _______, KC_NUHS, KC_NUBS, KC_APP,   KC_APP,   _______, \
+  _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END  \
 ),
 
 /* Adjust (Lower + Raise)
