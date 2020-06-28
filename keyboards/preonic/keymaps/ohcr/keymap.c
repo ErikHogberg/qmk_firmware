@@ -135,7 +135,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      | Menu |      |      |      |             |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  * IDEA: V as leader key
- * IDEA: WoW rotation tap-dance
  */
 [_LOWER] = LAYOUT_preonic_grid( \
   KC_TAB,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,  \
@@ -157,14 +156,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |             |      | Home | PgDn | PgUp | End |
  * `-----------------------------------------------------------------------------------'
- *
- * TODO: Rotary encoder volume control, click to mute?
  */
 [_RAISE] = LAYOUT_preonic_grid( \
   KC_GRV,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,   KC_DEL,  \
-  KC_MUTE, KC_BTN2, KC_MS_U, KC_BTN1, _______, _______, _______, KC_UNDS, KC_PLUS, KC_F11,  KC_F12,   KC_NUHS,  \
-  KC_DEL,  KC_MS_L, KC_MS_D, KC_MS_R, _______, _______, _______, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC,  KC_BSLS, \
-  _______, _______, _______, _______, _______, _______, _______, KC_NUHS, KC_NUBS, KC_APP,   KC_APP,   _______, \
+  KC_MUTE, KC_BTN2, KC_MS_U, KC_BTN1, RGB_MOD, RGB_TOG, RGB_M_P, KC_UNDS, KC_PLUS, KC_F11,  KC_F12,   KC_NUHS,  \
+  KC_DEL,  KC_MS_L, KC_MS_D, KC_MS_R, RGB_RMOD, RGB_M_B, RGB_M_G, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC,  KC_BSLS, \
+  _______, _______, _______, _______, _______, _______, RGB_M_SW,KC_NUHS, KC_NUBS, KC_APP,  KC_APP,   _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END  \
 ),
 
@@ -174,7 +171,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      | Reset|      |      |      |      | Runic| Term | Term |      | Print|  Del |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |      |Aud on|AudOff|AGnorm|AGswap|Qwerty|Colemk|Dvorak| My PC| Calc |
+ * |      |      |      |Aud on|AudOff|AGnorm|AGswap|      |Qwerty|Runic | My PC| Calc |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Brite|Voice-|Voice+|Mus on|MusOff|MidiOn|MidOff|MusTog|      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -282,11 +279,11 @@ void encoder_update_user(uint8_t index, bool clockwise) {
         register_code(KC_WH_U);
         unregister_code(KC_WH_U);
       }
-  
+
     } else if (IS_LAYER_ON(_RAISE)) {
       uint16_t held_keycode_timer = timer_read();
       if (clockwise) {
-        register_code(KC_VOLU); 
+        register_code(KC_VOLU);
           // thanks to u/mindsound for volume knob fix fix: https://www.reddit.com/r/olkb/comments/9jzbg1/help_with_rotary_encoder_code/?utm_source=amp&utm_medium=comment_list
           while (timer_elapsed(held_keycode_timer) < MEDIA_KEY_DELAY) {
             // no-op
@@ -301,6 +298,8 @@ void encoder_update_user(uint8_t index, bool clockwise) {
       }
 
     } else if (IS_LAYER_ON(_ADJUST)) {
+        // FIXME: encoder adjust not working, uses lower instead?
+        // IDEA: alt+arrow up and down to move lines instead?
       if (clockwise) {
         register_code(KC_DEL);
         unregister_code(KC_DEL);
