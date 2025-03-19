@@ -20,6 +20,7 @@
 enum preonic_layers {
   _QWERTY,
   _RUNIC,
+  _ARROWS,
   _LOWER,
   _RAISE,
   _ADJUST
@@ -28,6 +29,7 @@ enum preonic_layers {
 enum preonic_keycodes {
   QWERTY = SAFE_RANGE,
   RUNIC,
+  ARROWS,
   LOWER = LT(_LOWER, KC_TAB),
   RAISE = LT(_RAISE, KC_DEL), // IDEA: leader key
   BACKLIT
@@ -171,7 +173,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      | Reset|      |      |      |      | Runic| Term | Term |      | Print|  Del |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |      |Aud on|AudOff|AGnorm|AGswap|      |Qwerty|Runic | My PC| Calc |
+ * |      |      |      |Aud on|AudOff|AGnorm|AGswap|Arrows|Qwerty|Runic | My PC| Calc |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Brite|Voice-|Voice+|Mus on|MusOff|MidiOn|MidOff|MusTog|      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -181,9 +183,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_ADJUST] = LAYOUT_preonic_grid( \
   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  \
   _______, RESET,   DEBUG,   _______, _______, _______, _______, TERM_ON, TERM_OFF,_______, KC_PSCR, KC_DEL,  \
-  _______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, _______, QWERTY,  RUNIC,   KC_MYCM, KC_CALC, \
+  _______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, ARROWS, QWERTY,  RUNIC,   KC_MYCM, KC_CALC,  \
   BACKLIT, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  MU_TOG,  _______, _______, _______, _______, \
   _______, _______, _______, _______, _______, _______, _______, _______, _______, KC_VOLD, KC_VOLU, _______  \
+),
+
+/* Adjust (Lower + Raise)
+ * ,-----------------------------------------------------------------------------------.
+ * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |  F8  |  F9  |  F10 |  F11 |  F12 |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |Qwerty|      |  Up  |      |      |      |      |      |  Up  |      |      |      |
+ * |------+------+------+------+------+-------------+------+------+------+------+------|
+ * |      | Left | Down |Right |      |      |      | Left | Down |Right |      |      |
+ * |------+------+------+------+------+------|------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |             |      |      |      |      |      |
+ * `-----------------------------------------------------------------------------------'
+ */
+[_ARROWS] = LAYOUT_preonic_grid( \
+  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  \
+  QWERTY, _______,  KC_UP,   _______, _______, _______, _______, _______, KC_UP,   _______, _______, _______, \
+  _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______, _______, KC_LEFT, KC_DOWN, KC_RGHT, _______, _______, \
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, \
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______  \
 )
 
 };
@@ -203,6 +226,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case RUNIC:
           if (record->event.pressed) {
             set_single_persistent_default_layer(_RUNIC);
+          }
+          return false;
+          break;
+        case ARROWS:
+          if (record->event.pressed) {
+            set_single_persistent_default_layer(_ARROWS);
           }
           return false;
           break;
@@ -255,7 +284,7 @@ uint16_t muse_tempo = 50;
 
 bool clockwise_tab = false;
 
-void encoder_update_user(uint8_t index, bool clockwise) {
+bool encoder_update_user(uint8_t index, bool clockwise) {
   if (muse_mode) {
     if (IS_LAYER_ON(_RAISE)) {
       if (clockwise) {
@@ -322,6 +351,8 @@ void encoder_update_user(uint8_t index, bool clockwise) {
     }
 
   }
+
+  return true;
 }
 
 void dip_update(uint8_t index, bool active) {
